@@ -1,0 +1,119 @@
+<!--Programa un juego para adivinar un número entero aleatorio, entre 1 y 500.
+
+Si el número es menor a 0 o mayor a 500, el programa deberá decir:
+Por favor indica un número entre 0 y 500
+
+Si la distancia entre el número a adivinar y el del usuario/a es de 50 o más, el programa deberá mostrar:
+Frío, frío: tu número es más grande que el mío o
+Frío, frío: tu número es más pequeño que el mío,
+según sea el caso.
+
+Si la distancia entre el número a adivinar y el del usuario/a está entre 15 y 50, el programa deberá mostrar:
+Tibio, tibio: tu número es más grande que el mío o
+Tibio, tibio: tu número es más pequeño que el mío,
+según sea el caso.
+
+Y si la distancia entre el número a adivinar y el del usuario/a es menor a 15, el programa deberá mostrar:
+Caliente, caliente: tu número es más grande que el mío o
+Caliente, caliente: tu número es más pequeño que el mío,
+según sea el caso.
+
+Cuando el usuario acierta, debe ocultarse el botón Adivinar.
+
+En cada caso (frío, tibio, caliente o ganador) el programa deberá tener una imagen de fondo que acompañe este estado. Se adjuntan pantallas.
+
+/*Modifica el juego Frío-Tibio-Caliente, para que todas las entradas de datos sean por prompt y todos los mensajes mostrados con alert.-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HotCold game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <p><button type="button" onclick="toGuess()" id="guess">Guess</button></p>
+    <p><button type="button" onclick="reset()" id="reset">Reset</button></p>
+    <p id="output"></p>
+
+    <script src="array.js"></script>
+    <script>
+      let random = Math.floor(Math.random() * 501);
+      console.log(random);
+      const ROUTE = "./";
+      let length = array.length;
+      let i = 1;
+      let sub;
+      let input;
+
+      function check(input) {
+        input = input < 0 || input > 500 ? null : input;
+        if (input == null) {
+          document.getElementById("output").innerHTML =
+            "Please choose a number between 0 and 500";
+          setTimeout(() => {
+            document.getElementById("output").innerHTML = "";
+          }, 1000);
+          return;
+        }
+        i++;
+        sub = random - input;
+        if (sub < 0) sub = sub * -1;
+        if (sub >= 50 && input > random) {
+          document.body.style.backgroundImage = `url('${
+            ROUTE + array[0].img
+          }')`;
+          console.log(`url('${ROUTE + array[0].img}')`);
+          alert(array[0].text);
+        } else if (sub >= 50 && input < random) {
+          document.body.style.backgroundImage = `url('${
+            ROUTE + array[1].img
+          }')`;
+
+          alert(array[1].text);
+        } else if (sub < 50 && sub >= 15 && input > random) {
+          document.body.style.backgroundImage = `url('${
+            ROUTE + array[2].img
+          }')`;
+
+          alert(array[2].text);
+        } else if (sub < 50 && sub >= 15 && input < random) {
+          document.body.style.backgroundImage = `url('${
+            ROUTE + array[3].img
+          }')`;
+
+          alert(array[3].text);
+        } else if (sub < 15 && input > random) {
+          document.body.style.backgroundImage = `url('${
+            ROUTE + array[4].img
+          }')`;
+
+          alert(array[4].text);
+        } else if (sub < 15 && input < random) {
+          document.body.style.backgroundImage = `url('${
+            ROUTE + array[5].img
+          }')`;
+
+          alert(array[5].text);
+        }
+      }
+      function toGuess() {
+        input = parseInt(prompt("Guess a number between 0 and 500"));
+        if (input != random) check(input);
+        else {
+          alert("You got it boy in " + i + " tries");
+          document.body.style.backgroundImage = `url('${
+            ROUTE + "correct.jpg"
+          }')`;
+        }
+      }
+      function reset() {
+        random = Math.floor(Math.random() * 501);
+        console.log(random);
+        document.body.style.backgroundImage = "none";
+        i = 1;
+      }
+    </script>
+  </body>
+</html>
